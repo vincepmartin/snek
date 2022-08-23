@@ -18,30 +18,32 @@ public class Snek : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get input
-        if (Input.GetAxis("Vertical") > 0) {
-            vertical = 1;
-            horizontal = 0;
+        if (Input.GetKeyDown("left")) 
+        {
+            transform.RotateAround(transform.position, transform.up, -90f);
+            
         }
-        
-        if (Input.GetAxis("Vertical") < 0){
-            vertical = -1;
-            horizontal = 0;
+        if (Input.GetKeyDown("right")) 
+        {
+            transform.RotateAround(transform.position, transform.up, 90f);
         }
 
+        /*  TODO: Fix this...
         if (Input.GetAxis("Horizontal") > 0) {
             horizontal = 1;
             vertical = 0;
-        } 
-        
+            transform.RotateAround(transform.position, transform.up, 90f);
+        }
+
         if (Input.GetAxis("Horizontal") < 0) {
             Debug.Log("GO LEFT");
             horizontal = -1;
             vertical = 0;
+            // transform.RotateAround(transform.position, transform.up, Time.deltaTime * -90f);
+            transform.RotateAround(transform.position, transform.up, -90f);
         }
+        */
 
-        // Update position
-        // TODO: Consider putting this into a queue or something so the rest of the body can follow this...
-        transform.position = transform.position + new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime); 
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }
