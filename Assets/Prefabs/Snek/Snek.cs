@@ -8,6 +8,7 @@ public class Snek : MonoBehaviour
     public int bodySize = 1;
     public int maxSize = 20;
     public GameObject bodyObject;
+    public GameObject transformObject;
 
     // Bodies
     private GameObject[] bodies;
@@ -20,7 +21,7 @@ public class Snek : MonoBehaviour
     void Start()
     {
         // Init our location history and add our first position.
-        locationHistory = new Vector3[maxSize];
+        locationHistory = new Vector3[10000];
         locationHistory[0] = transform.position;
 
         // Create any body objects that are required.
@@ -30,29 +31,29 @@ public class Snek : MonoBehaviour
             Debug.Log("Adding a body...");
             bodyObject = Instantiate(bodyObject, transform.position - new Vector3(0, 0, (i+1)) , transform.rotation);
             bodies[i] = bodyObject;
-
         } 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("left")) 
-        {
+        if (Input.GetKeyDown("left")) {
             transform.RotateAround(transform.position, transform.up, -90f);
+            Instantiate(transformObject, transform.position, transform.rotation);
             RotateBodies(-90f);
         }
 
-        if (Input.GetKeyDown("right")) 
-        {
+        if (Input.GetKeyDown("right")) {
             transform.RotateAround(transform.position, transform.up, 90f);
+            Instantiate(transformObject, transform.position, transform.rotation);
             RotateBodies(90f);
         }
 
         // Instantiate a body object.
-        if (Input.GetKeyDown("n"))
-        {
+        if (Input.GetKeyDown("n")) {
+            Debug.Log("*******");
             Debug.Log("Add a new body...");
+            Debug.Log("*******");
         }
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
@@ -60,9 +61,8 @@ public class Snek : MonoBehaviour
         // Move all of the bodies Forward
         MoveBodies(); 
 
-        if (Vector3.Distance(locationHistory[latestLocationHistory], transform.position) >= 1)
-        {
-            Debug.Log("Adding a new Location to history");
+        if (Vector3.Distance(locationHistory[latestLocationHistory], transform.position) >= 1) {
+            // Debug.Log("Adding a new Location to history");
             latestLocationHistory += 1;
             locationHistory[latestLocationHistory] = transform.position;
         }
@@ -71,16 +71,14 @@ public class Snek : MonoBehaviour
     // Translate all snake bodies.
     void MoveBodies()
     {
-        for (int i = 0; i < bodySize; i ++)
-        {
+        for (int i = 0; i < bodySize; i ++) {
             bodies[i].transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }
 
     void RotateBodies(float rotate)
     {
-        for (int i = 0; i < bodySize; i ++)
-        {
+        for (int i = 0; i < bodySize; i ++) {
             bodies[i].transform.RotateAround(bodies[i].transform.position, bodies[i].transform.up, rotate);
         }
     }
