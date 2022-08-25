@@ -16,4 +16,16 @@ public class SnekBody : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        Debug.Log("Body hit a triger of: ");
+        Debug.Log(collider);
+        transform.rotation = collider.transform.rotation;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+    }
 }
