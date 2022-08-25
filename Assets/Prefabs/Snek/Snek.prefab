@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  bodySize: 2
+  bodySize: 1
   maxSize: 20
   bodyObject: {fileID: 4582808831363321949, guid: cfd1a0f49685b1342b25201cb85eaf5b,
     type: 3}

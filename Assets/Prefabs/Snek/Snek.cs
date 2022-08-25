@@ -40,13 +40,13 @@ public class Snek : MonoBehaviour
         if (Input.GetKeyDown("left")) {
             transform.RotateAround(transform.position, transform.up, -90f);
             Instantiate(transformObject, transform.position, transform.rotation);
-            RotateBodies(-90f);
+            // RotateBodies(-90f);
         }
 
         if (Input.GetKeyDown("right")) {
             transform.RotateAround(transform.position, transform.up, 90f);
             Instantiate(transformObject, transform.position, transform.rotation);
-            RotateBodies(90f);
+            // RotateBodies(90f);
         }
 
         // Instantiate a body object.

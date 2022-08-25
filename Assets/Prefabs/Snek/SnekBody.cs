@@ -28,4 +28,10 @@ public class SnekBody : MonoBehaviour
     {
 
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log("OnTriggerStray: ");
+        Debug.Log(other); 
+    }
 }
