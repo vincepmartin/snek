@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4869499555532795356}
   - component: {fileID: 4921756552786542139}
   - component: {fileID: 5405805412374399312}
-  - component: {fileID: 4435504151005089766}
   - component: {fileID: 8484233567585459952}
+  - component: {fileID: -3453556369176679394}
   m_Layer: 0
-  m_Name: SnakeTransformTrigger
+  m_Name: SnekTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,18 +99,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4435504151005089766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4582808831363321949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa63b0b6ee05ebd4f8fc471a8e57cb9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &8484233567585459952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,3 +115,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3453556369176679394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4582808831363321949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a71a693d838cd74a988951826f7727e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapDistance: 0.12

@@ -7,6 +7,8 @@ public class Snek : MonoBehaviour
     public float speed = 1f;
     public int bodySize = 1;
     public int maxSize = 20;
+    private int bodyTransforms = 0;
+
     public GameObject bodyObject;
     public GameObject transformObject;
 
@@ -30,8 +32,11 @@ public class Snek : MonoBehaviour
         {
             Debug.Log("Adding a body...");
             bodyObject = Instantiate(bodyObject, transform.position - new Vector3(0, 0, (i+1)) , transform.rotation);
+            bodyObject.name = $"body{i}";
             bodies[i] = bodyObject;
-        } 
+        }
+
+        gameObject.tag = "snake";
     }
 
     // Update is called once per frame
@@ -73,13 +78,6 @@ public class Snek : MonoBehaviour
     {
         for (int i = 0; i < bodySize; i ++) {
             bodies[i].transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        }
-    }
-
-    void RotateBodies(float rotate)
-    {
-        for (int i = 0; i < bodySize; i ++) {
-            bodies[i].transform.RotateAround(bodies[i].transform.position, bodies[i].transform.up, rotate);
         }
     }
 }

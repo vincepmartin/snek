@@ -6,9 +6,8 @@ public class SnekBody : MonoBehaviour
 {
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        gameObject.tag = "body";    
     }
 
     // Update is called once per frame
@@ -19,19 +18,11 @@ public class SnekBody : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("Body hit a triger of: ");
-        Debug.Log(collider);
-        transform.rotation = collider.transform.rotation;
+    
     }
 
     private void OnCollisionEnter(Collision collision)
     {
 
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log("OnTriggerStray: ");
-        Debug.Log(other); 
     }
 }
