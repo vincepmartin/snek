@@ -6,6 +6,7 @@ public class SnekTransform : MonoBehaviour
 {
 
     private Dictionary<string, Collider> bodiesInTrigger;
+    private List<string> bodiesAlreadyActedOn;
     public float snapDistance = .0015f;
 
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class SnekTransform : MonoBehaviour
     {
         gameObject.tag = "bodyTransform";
         bodiesInTrigger = new Dictionary<string, Collider>();
+        bodiesAlreadyActedOn = new List<string>();
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class SnekTransform : MonoBehaviour
                 // Debug.Log($"{kvp.Key} distance: {Vector3.Distance(bodyCollider.gameObject.transform.position, transform.position)}");
                 bodyCollider.gameObject.transform.position = transform.position;
                 bodyCollider.gameObject.transform.rotation = transform.rotation;
+                bodiesAlreadyActedOn.Add(kvp.Key);
                 bodiesInTrigger.Remove(kvp.Key);
             }
         }
@@ -38,7 +41,10 @@ public class SnekTransform : MonoBehaviour
         if (other.gameObject.tag == "body")
         {
             // Debug.Log("Adding: " + other.gameObject.name);
-            bodiesInTrigger[other.gameObject.name] = other;
+            if (!bodiesAlreadyActedOn.Contains(other.gameObject.name))
+            {
+                bodiesInTrigger[other.gameObject.name] = other;
+            }
         }
     }
 
