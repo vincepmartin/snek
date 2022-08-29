@@ -66,7 +66,7 @@ public class Snek : MonoBehaviour
     // Help from https://youtu.be/iuz7aUHYC_E
     void MoveBodies(int gap)
     {
-        int index = 0;
+        int index = 1;
         foreach (var body in bodies)
         {
             Vector3 point = locationHistory[Mathf.Min(index * gap, locationHistory.Count - 1)];
