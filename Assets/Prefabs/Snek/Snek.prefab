@@ -47,12 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a477585f77af8eb45bcc3a09ccf0020f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   bodySize: 1
   maxSize: 20
-  bodyObject: {fileID: 4582808831363321949, guid: cfd1a0f49685b1342b25201cb85eaf5b,
-    type: 3}
-  transformObject: {fileID: 4582808831363321949, guid: 0f4e0afb3144b184eba5f9d37240da18,
+  gap: 85
+  bodyPrefab: {fileID: 4582808831363321949, guid: cfd1a0f49685b1342b25201cb85eaf5b,
     type: 3}
 --- !u!135 &3631310530403093776
 SphereCollider:

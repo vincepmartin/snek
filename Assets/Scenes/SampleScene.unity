@@ -980,13 +980,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7752183929026190732, guid: 09bbe4fca3ccbc44a8b069fdcf52a30d,
         type: 3}
+      propertyPath: gap
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752183929026190732, guid: 09bbe4fca3ccbc44a8b069fdcf52a30d,
+        type: 3}
       propertyPath: speed
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7752183929026190732, guid: 09bbe4fca3ccbc44a8b069fdcf52a30d,
         type: 3}
       propertyPath: bodySize
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7752183929026190732, guid: 09bbe4fca3ccbc44a8b069fdcf52a30d,
+        type: 3}
+      propertyPath: bodyPrefab
+      value: 
+      objectReference: {fileID: 4582808831363321949, guid: cfd1a0f49685b1342b25201cb85eaf5b,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09bbe4fca3ccbc44a8b069fdcf52a30d, type: 3}

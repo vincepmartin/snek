@@ -5,7 +5,8 @@ using UnityEngine;
 public class SnekTransform : MonoBehaviour
 {
 
-    private Dictionary<string, Collider> bodiesInTrigger;
+    // private Dictionary<string, Collider> bodiesInTrigger;
+    private Queue<Collider> bodiesQueue;
     private List<string> bodiesAlreadyActedOn;
     public float snapDistance = .0015f;
 
@@ -13,37 +14,33 @@ public class SnekTransform : MonoBehaviour
     void Start()
     {
         gameObject.tag = "bodyTransform";
-        bodiesInTrigger = new Dictionary<string, Collider>();
         bodiesAlreadyActedOn = new List<string>();
+        bodiesQueue = new Queue<Collider>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if any of our colliders are perfect matches... 
-        foreach (KeyValuePair<string, Collider> kvp in bodiesInTrigger)
+        if (bodiesQueue.Count > 0 )
         {
-            Collider bodyCollider = kvp.Value;
-            if (Vector3.Distance(bodyCollider.gameObject.transform.position, transform.position) < snapDistance)
-            {
-                // Debug.Log($"{kvp.Key} distance: {Vector3.Distance(bodyCollider.gameObject.transform.position, transform.position)}");
+            Collider bodyCollider = bodiesQueue.Peek();
+            if (Vector3.Distance(bodyCollider.gameObject.transform.position, transform.position) < snapDistance) {
                 bodyCollider.gameObject.transform.position = transform.position;
                 bodyCollider.gameObject.transform.rotation = transform.rotation;
-                bodiesAlreadyActedOn.Add(kvp.Key);
-                bodiesInTrigger.Remove(kvp.Key);
+                bodiesAlreadyActedOn.Add(bodyCollider.gameObject.name);
+                bodiesQueue.Dequeue();
             }
-        }
-
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "body")
         {
-            // Debug.Log("Adding: " + other.gameObject.name);
             if (!bodiesAlreadyActedOn.Contains(other.gameObject.name))
             {
-                bodiesInTrigger[other.gameObject.name] = other;
+                Debug.Log("Adding: " + other.gameObject.name);
+                bodiesQueue.Enqueue(other);
             }
         }
     }

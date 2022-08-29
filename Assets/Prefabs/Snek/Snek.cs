@@ -7,36 +7,33 @@ public class Snek : MonoBehaviour
     public float speed = 1f;
     public int bodySize = 1;
     public int maxSize = 20;
-    private int bodyTransforms = 0;
-
-    public GameObject bodyObject;
-    public GameObject transformObject;
+    public int gap = 50;
 
     // Bodies
-    private GameObject[] bodies;
+    public GameObject bodyPrefab;
+    private List<GameObject> bodies;
 
     // Store array of vector3s
-    private Vector3[] locationHistory;
-    private int latestLocationHistory = 0;
+    private List<Vector3> locationHistory;
     
     // Start is called before the first frame update
     void Start()
     {
-        // Init our location history and add our first position.
-        locationHistory = new Vector3[10000];
-        locationHistory[0] = transform.position;
+        locationHistory = new List<Vector3>();
 
         // Create any body objects that are required.
-        bodies = new GameObject[maxSize];
+        bodies = new List<GameObject>();
         for (int i = 0; i < bodySize; i++ )
         {
-            Debug.Log("Adding a body...");
-            bodyObject = Instantiate(bodyObject, transform.position - new Vector3(0, 0, (i+1)) , transform.rotation);
-            bodyObject.name = $"body{i}";
-            bodies[i] = bodyObject;
+            AddBody(i);
         }
 
         gameObject.tag = "snake";
+    }
+
+    private void AddBody(int i)
+    {
+        bodies.Add(Instantiate(bodyPrefab));
     }
 
     // Update is called once per frame
@@ -44,40 +41,39 @@ public class Snek : MonoBehaviour
     {
         if (Input.GetKeyDown("left")) {
             transform.RotateAround(transform.position, transform.up, -90f);
-            Instantiate(transformObject, transform.position, transform.rotation);
-            // RotateBodies(-90f);
         }
 
         if (Input.GetKeyDown("right")) {
             transform.RotateAround(transform.position, transform.up, 90f);
-            Instantiate(transformObject, transform.position, transform.rotation);
-            // RotateBodies(90f);
         }
 
         // Instantiate a body object.
         if (Input.GetKeyDown("n")) {
-            Debug.Log("*******");
-            Debug.Log("Add a new body...");
-            Debug.Log("*******");
+            AddBody(1);
         }
 
+        // Move the head.
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-        // Move all of the bodies Forward
-        MoveBodies(); 
+        // Add to our position log.
+        locationHistory.Insert(0, transform.position);
 
-        if (Vector3.Distance(locationHistory[latestLocationHistory], transform.position) >= 1) {
-            // Debug.Log("Adding a new Location to history");
-            latestLocationHistory += 1;
-            locationHistory[latestLocationHistory] = transform.position;
-        }
+        // Move body parts.
+        MoveBodies(gap); 
     }
 
     // Translate all snake bodies.
-    void MoveBodies()
+    // Help from https://youtu.be/iuz7aUHYC_E
+    void MoveBodies(int gap)
     {
-        for (int i = 0; i < bodySize; i ++) {
-            bodies[i].transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        int index = 0;
+        foreach (var body in bodies)
+        {
+            Vector3 point = locationHistory[Mathf.Min(index * gap, locationHistory.Count - 1)];
+            Vector3 moveDirection = point - body.transform.position;
+            body.transform.position = point;
+            // body.transform.LookAt(moveDirection);
+            index++;
         }
     }
 }
