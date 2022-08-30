@@ -8,6 +8,7 @@ public class Snek : MonoBehaviour
     public int bodySize = 1;
     public int maxSize = 20;
     public int gap = 50;
+    public int bodyGrowthRate = 4;
 
     // Bodies
     public GameObject bodyPrefab;
@@ -47,12 +48,12 @@ public class Snek : MonoBehaviour
             transform.RotateAround(transform.position, transform.up, 90f);
         }
 
-        // Instantiate a body object.
+        // Instantiate a new body object.
         if (Input.GetKeyDown("n")) {
             AddBody(1);
         }
 
-        // Move the head.
+        // Move the head forward.
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
         // Add to our position log.
@@ -74,6 +75,23 @@ public class Snek : MonoBehaviour
             body.transform.position = point;
             // body.transform.LookAt(moveDirection);
             index++;
+        }
+    }
+
+    // Handle our Collisions.
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision Hit!");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Snek Trigger Entered: " + other.gameObject.name);
+
+        if (other.gameObject.tag.Equals("apple"))
+        {
+            AddBody(bodyGrowthRate);
+            Destroy(other.gameObject);
         }
     }
 }

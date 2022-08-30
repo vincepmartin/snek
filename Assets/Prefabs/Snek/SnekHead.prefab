@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 5730996415436916205}
   - component: {fileID: 1996417375672317363}
   - component: {fileID: 2299384813136832691}
+  - component: {fileID: 2138779666707614293}
   m_Layer: 0
   m_Name: Tongue
   m_TagString: Untagged
@@ -419,6 +420,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2138779666707614293
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369621176224277408}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
+  m_Center: {x: 0, y: -0.0000019073486, z: -0.00000047683716}
 --- !u!1 &4021494306941458671
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6658572945385860651}
   - component: {fileID: 8856859357502210916}
+  - component: {fileID: 3018146286959922948}
   m_Layer: 0
   m_Name: SnekHead
   m_TagString: Untagged
@@ -640,8 +655,22 @@ MonoBehaviour:
   bodySize: 2
   maxSize: 20
   gap: 75
+  bodyGrowthRate: 4
   bodyPrefab: {fileID: 4582808831363321949, guid: cfd1a0f49685b1342b25201cb85eaf5b,
     type: 3}
+--- !u!135 &3018146286959922948
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410000565817611898}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.17, z: 0}
 --- !u!1 &4864534700084820098
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +682,6 @@ GameObject:
   - component: {fileID: 198535380390352875}
   - component: {fileID: 3905880464494054970}
   - component: {fileID: 2139346323084119223}
-  - component: {fileID: 8330165306601377505}
   m_Layer: 0
   m_Name: Skull
   m_TagString: Untagged
@@ -728,19 +756,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8330165306601377505
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4864534700084820098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5983937819137772783
 GameObject:
   m_ObjectHideFlags: 0
