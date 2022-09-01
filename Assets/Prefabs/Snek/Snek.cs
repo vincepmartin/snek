@@ -56,7 +56,7 @@ public class Snek : MonoBehaviour
 
         // TODO: Remove me, create a new board for testing.
         if (Input.GetKeyDown("b")) {
-            Instantiate(boardPrefab).GetComponent<SnekBoard>().InitWithProps(new Vector3(10f, .3f, 20f));
+            Instantiate(boardPrefab).GetComponent<SnekBoard>().InitWithProps(new Vector3(10f, .3f, 10f));
         }
 
         // Move the head forward.

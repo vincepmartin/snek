@@ -7,7 +7,14 @@ public class SnekBoard : MonoBehaviour
     public Vector3 scale = new Vector3(20f, .5f, 20f);
     public Vector3 position = Vector3.zero;
 
+
+    private float wallHeight = 1f;
+    private float wallThickness = .5f;
     private GameObject floor;
+    private GameObject wall0;
+    private GameObject wall1;
+    private GameObject wall2;
+    private GameObject wall3;
 
     // Allow me to set items via code.
     public void InitWithProps(Vector3? scale = null, Vector3? position = null)
@@ -40,14 +47,22 @@ public class SnekBoard : MonoBehaviour
         floor.name = "floor";
         floor.transform.localScale = scale;
         floor.transform.position = position;
-        var r = floor.GetComponent<MeshRenderer>();
-        r.material.SetColor("_Color", Color.blue);
-        // TODO: Add colliders etc. 
-        Instantiate(floor);
+        floor.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.blue);
+        floor.GetComponent<BoxCollider>().isTrigger = true;
     }
 
     void CreateWalls()
     {
         Debug.Log("Creating walls");
+        wall0 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall0.name = "wall0";
+        wall0.transform.position = new Vector3(0, (wallHeight / 2) - (this.scale.y/2), scale.z / 2 + (wallThickness / 2));
+        wall0.transform.localScale = new Vector3(this.scale.x, wallHeight, wallThickness);
+        wall0.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+        wall0.GetComponent<BoxCollider>().isTrigger = true;
+
+        wall2 = Instantiate(wall0);
+        wall2.name = "wall2";
+        wall2.transform.position = new Vector3(wall2.transform.position.x, wall2.transform.position.y, wall2.transform.position.z * -1);
     }
 }
