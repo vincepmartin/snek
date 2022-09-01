@@ -12,6 +12,7 @@ public class Snek : MonoBehaviour
 
     // Bodies
     public GameObject bodyPrefab;
+    public GameObject boardPrefab;
     private List<GameObject> bodies;
 
     // Store array of vector3s
@@ -51,6 +52,11 @@ public class Snek : MonoBehaviour
         // Instantiate a new body object.
         if (Input.GetKeyDown("n")) {
             AddBody(1);
+        }
+
+        // TODO: Remove me, create a new board for testing.
+        if (Input.GetKeyDown("b")) {
+            Instantiate(boardPrefab).GetComponent<SnekBoard>().InitWithProps(new Vector3(10f, .3f, 20f));
         }
 
         // Move the head forward.
