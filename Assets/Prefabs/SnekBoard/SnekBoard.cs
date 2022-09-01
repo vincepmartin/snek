@@ -53,6 +53,7 @@ public class SnekBoard : MonoBehaviour
 
     void CreateWalls()
     {
+        // Create walls, starting at top (0) and going counter clockwise.
         Debug.Log("Creating walls");
         wall0 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         wall0.name = "wall0";
@@ -60,9 +61,17 @@ public class SnekBoard : MonoBehaviour
         wall0.transform.localScale = new Vector3(this.scale.x, wallHeight, wallThickness);
         wall0.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
         wall0.GetComponent<BoxCollider>().isTrigger = true;
-
+        
         wall2 = Instantiate(wall0);
         wall2.name = "wall2";
         wall2.transform.position = new Vector3(wall2.transform.position.x, wall2.transform.position.y, wall2.transform.position.z * -1);
+
+        wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wall1.name = "wall1";
+        wall1.transform.position = new Vector3(scale.x / 2 + (wallThickness / 2), (wallHeight / 2) - (this.scale.y/2), 0);
+        wall1.transform.localScale = new Vector3(wallThickness, wallHeight, this.scale.z + (wallThickness * 2));
+        wall1.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+        wall1.GetComponent<BoxCollider>().isTrigger = true;
+
     }
 }
