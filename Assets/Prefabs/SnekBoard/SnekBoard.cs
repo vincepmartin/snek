@@ -32,6 +32,8 @@ public class SnekBoard : MonoBehaviour
         transform.position = position;
         CreateFloor();
         CreateWalls();
+
+        Grid grid = new Grid(10, 10, 5f, null); 
     }
 
     // Update is called once per frame

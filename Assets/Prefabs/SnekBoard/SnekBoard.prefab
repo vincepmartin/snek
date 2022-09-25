@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8761385218811740689}
   - component: {fileID: 3091256431193144239}
+  - component: {fileID: -7475628004042756074}
   m_Layer: 0
   m_Name: SnekBoard
   m_TagString: Untagged
@@ -44,6 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826dbbd3b6359d944b4e3f6f641c2568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 20
-  ySize: 2
-  zSize: 20
+  scale: {x: 20, y: 0.5, z: 20}
+  position: {x: 0, y: 0, z: 0}
+  wallHeight: 1
+  wallThickness: 0.5
+  floorThickness: 0.25
+--- !u!156049354 &-7475628004042756074
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761385218811740701}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
