@@ -11,6 +11,7 @@ public class SnekBoard : MonoBehaviour
     public float wallHeight = 1f;
     public float wallThickness = .5f;
     public float floorThickness = .25f;
+    private Grid grid;
     private GameObject floor;
     private GameObject wall0;
     private GameObject wall1;
@@ -30,24 +31,28 @@ public class SnekBoard : MonoBehaviour
         tag = "snekboard";
         transform.localScale = scale;
         transform.position = position;
+        CreateGrid();
         CreateFloor();
         CreateWalls();
 
-        Grid grid = new Grid(10, 10, 5f, null); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
+    void CreateGrid()
+    {
+        grid = new Grid(10, 5, 5f, null); 
+    }
     void CreateFloor()
     {
         Debug.Log("Creating a floor");
         floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
         floor.name = "floor";
-        floor.transform.localScale = new Vector3(scale.x, floorThickness, scale.z);
+        // floor.transform.localScale = new Vector3(scale.x, floorThickness, scale.z);
+        floor.transform.localScale = new Vector3(grid.GetScale().x, floorThickness, grid.GetScale().z);
         floor.transform.position = position;
         floor.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.blue);
         floor.GetComponent<BoxCollider>().isTrigger = true;
