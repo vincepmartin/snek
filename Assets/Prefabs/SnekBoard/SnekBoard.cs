@@ -73,7 +73,7 @@ public class SnekBoard : MonoBehaviour
         wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         wall1.name = "wall1";
         wall1.transform.position = new Vector3(scale.x / 2 + (wallThickness / 2), (wallHeight / 2) - (this.scale.y/2), 0);
-        wall1.transform.localScale = new Vector3(wallThickness, wallHeight, this.scale.z + (wallThickness * 2));
+        wall1.transform.localScale = new Vector3(wallThickness, wallHeight, grid.GetScale().z + (wallThickness * 2));
         wall1.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
         wall1.GetComponent<BoxCollider>().isTrigger = true;
         
