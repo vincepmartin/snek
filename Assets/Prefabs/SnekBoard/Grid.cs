@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
@@ -30,7 +28,6 @@ public class Grid
             {
                 gridArray[x, z] = count;
                 count += 1;
-                // Debug.Log("Init (x, y): " + "(" + x + ", " + z + ")");
                 UtilsClass.CreateWorldText(gridArray[x, z].ToString(), null, GetWorldPosition(x, z), 20, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
@@ -40,7 +37,7 @@ public class Grid
 
     private Vector3 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x, 0, y) * cellSize; 
+        return new Vector3(((x * cellSize) + cellSize / 2), 0, (y * cellSize) + cellSize / 2); 
     }
 
     // Get grid position so that you can draw things over grid.

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SnekBoard : MonoBehaviour
 {
-    // TODO: Remove and convert me to gridWidth, gridHeight, and cellSize (f). 
     public Vector3 position = Vector3.zero;
     private Vector3 scale;
     public int gridWidth;
@@ -43,12 +42,8 @@ public class SnekBoard : MonoBehaviour
         // Get position based on the grid.
         position.x += grid.GetScale().x / 2;
         position.z += grid.GetScale().z / 2;
-        Debug.Log("Console Grid Scale: ");
-        Debug.Log(grid.GetScale());
-
         CreateFloor();
         CreateWalls();
-
     }
 
     // Update is called once per frame
