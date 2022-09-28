@@ -75,7 +75,6 @@ public class SnekBoard : MonoBehaviour
 
     void CreateWalls()
     {
-        // TODO: I feel like this can be done w/ some more simple Vector3 math.
         // Create walls, starting at top (0) and going clockwise.
         Debug.Log("Creating walls");
         wall0 = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -89,9 +88,9 @@ public class SnekBoard : MonoBehaviour
         wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         wall1.name = "wall1";
         wall1.transform.SetParent(transform);
-        wall1.transform.position = new Vector3(floor.transform.localScale.x + (wallThickness/2), (wallHeight - floorThickness) / 2, floor.transform.localScale.z/2);
+        wall1.transform.position = new Vector3(floor.transform.localScale.x + (wallThickness / 2), (wallHeight - floorThickness) / 2, floor.transform.localScale.z/2);
         wall1.transform.localScale = new Vector3(wallThickness, wallHeight, grid.GetScale().z + wallThickness);
-        wall1.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.yellow);
+        wall1.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
         wall1.GetComponent<BoxCollider>().isTrigger = true;
         
         wall2 = Instantiate(wall0);
@@ -102,7 +101,7 @@ public class SnekBoard : MonoBehaviour
         wall3 = Instantiate(wall1);
         wall3.name = "wall3";
         wall3.transform.SetParent(transform);
-        wall3.transform.position = new Vector3(floor.transform.position.x - (floor.transform.localScale.x / 2), wall3.transform.position.y, wall3.transform.position.z);
+        wall3.transform.position = new Vector3(floor.transform.position.x - (floor.transform.localScale.x / 2) - (wallThickness / 2), wall3.transform.position.y, wall3.transform.position.z);
     }
 
     void CreateSnake()
