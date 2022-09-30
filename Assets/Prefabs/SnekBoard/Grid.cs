@@ -35,7 +35,7 @@ public class Grid
         }
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(((x * cellSize) + cellSize / 2), 0, (y * cellSize) + cellSize / 2); 
     }

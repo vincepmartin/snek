@@ -9,6 +9,7 @@ public class Snek : MonoBehaviour
     public int maxSize = 20;
     public int gap = 50;
     public int bodyGrowthRate = 4;
+    private bool pause = false;
 
     // Bodies
     public GameObject bodyPrefab;
@@ -17,7 +18,24 @@ public class Snek : MonoBehaviour
 
     // Store array of vector3s
     private List<Vector3> locationHistory;
-    
+   
+    // Allow me to set items via code.
+    public Snek InitWithProps(Vector3 position, bool pause = true)
+    {
+        Debug.Log("Snek: Init with props...");
+        Debug.Log(position);
+        Debug.Log("Paused: " + pause);
+        
+        // TODO: Init the following as well...
+        // Bodies
+        // public GameObject bodyPrefab;
+        // public GameObject boardPrefab;
+
+        this.pause = pause;
+        transform.position = position;
+        return this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,19 +72,29 @@ public class Snek : MonoBehaviour
             AddBody(1);
         }
 
+        // Let the snake pause its movement for debug reasons.
+        if (Input.GetKeyDown("p"))
+        {
+            Debug.Log("Pause: " + pause);
+            pause = !pause;
+        }
+
         // TODO: Remove me, create a new board for testing.
         if (Input.GetKeyDown("b")) {
             Instantiate(boardPrefab).GetComponent<SnekBoard>().InitWithProps(new Vector3(10f, .3f, 10f));
         }
 
-        // Move the head forward.
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (!pause)
+        {
+            // Move the head forward.
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-        // Add to our position log.
-        locationHistory.Insert(0, transform.position);
+            // Add to our position log.
+            locationHistory.Insert(0, transform.position);
 
-        // Move body parts.
-        MoveBodies(gap); 
+            // Move body parts.
+            MoveBodies(gap);
+        }
     }
 
     // Translate all snake bodies.
