@@ -51,3 +51,4 @@ MonoBehaviour:
   wallHeight: 1
   wallThickness: 0.5
   floorThickness: 0.25
+  snake: {fileID: 8856859357502210916, guid: 16b9cd1ef4131914a9fb65c7bb958aa0, type: 3}

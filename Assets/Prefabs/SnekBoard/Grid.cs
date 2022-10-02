@@ -7,6 +7,7 @@ public class Grid
     private int height;
     private float cellSize;
     private int[,] gridArray;
+    private bool VerboseDebug = false; 
 
     // Scale of the grid.  Going to try to use this to create the board with the same size.
     private Vector3 gridScale;
@@ -28,14 +29,17 @@ public class Grid
             {
                 gridArray[x, z] = count;
                 count += 1;
-                UtilsClass.CreateWorldText(gridArray[x, z].ToString(), null, GetWorldPosition(x, z), 20, Color.white, TextAnchor.MiddleCenter);
-                Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
+                if (VerboseDebug)
+                {
+                    UtilsClass.CreateWorldText(gridArray[x, z].ToString(), null, GetWorldPosition(x, z), 20, Color.white, TextAnchor.MiddleCenter);
+                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
+                } 
             }
         }
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(((x * cellSize) + cellSize / 2), 0, (y * cellSize) + cellSize / 2); 
     }

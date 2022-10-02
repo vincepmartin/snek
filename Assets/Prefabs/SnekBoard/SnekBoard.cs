@@ -20,6 +20,8 @@ public class SnekBoard : MonoBehaviour
     private GameObject wall2;
     private GameObject wall3;
 
+    public Snek snake;
+
     // Allow me to set items via code.
     public void InitWithProps(Vector3? position = null, int gridWidth = 2, int gridHeight = 2)
     {
@@ -49,6 +51,9 @@ public class SnekBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("s")) {
+            CreateSnake(); 
+        }
     }
 
     void CreateGrid()
@@ -101,7 +106,18 @@ public class SnekBoard : MonoBehaviour
 
     void CreateSnake()
     {
+        Debug.Log("Creating a new snake!!!! via the board");
+        // TODO: Add the snake to a grid postion. Try 5,5.
+        var snakePosition = grid.GetWorldPosition(5, 5);
 
+        // GameObject snakeTemp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        // snakeTemp.name = "SnakeTemp";
+        // snakeTemp.transform.position = snakePosition;
+        // snakeTemp.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+        // Instantiate(snakeTemp);
+
+        snake.transform.position = snakePosition;
+        snake = Instantiate(snake);
     }
 
     void CreateApple()
