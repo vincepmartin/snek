@@ -109,10 +109,15 @@ public class SnekBoard : MonoBehaviour
         Debug.Log("Creating a new snake!!!! via the board");
         // TODO: Add the snake to a grid postion. Try 5,5.
         var snakePosition = grid.GetWorldPosition(5, 5);
-        // Instantiate(snake).GetComponent<Snek>().InitWithProps(snakePosition, true);
-        snake = gameObject.AddComponent<Snek>().InitWithProps(snakePosition, true) as Snek;
-        
 
+        // GameObject snakeTemp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        // snakeTemp.name = "SnakeTemp";
+        // snakeTemp.transform.position = snakePosition;
+        // snakeTemp.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+        // Instantiate(snakeTemp);
+
+        snake.transform.position = snakePosition;
+        snake = Instantiate(snake);
     }
 
     void CreateApple()

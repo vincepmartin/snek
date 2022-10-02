@@ -20,7 +20,7 @@ public class Snek : MonoBehaviour
     private List<Vector3> locationHistory;
    
     // Allow me to set items via code.
-    public Snek InitWithProps(Vector3 position, bool pause = true)
+    public Snek InitWithProps(Vector3 position, GameObject bodyPrefab, bool pause = true)
     {
         Debug.Log("Snek: Init with props...");
         Debug.Log(position);
