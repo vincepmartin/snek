@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class SnekBoard : MonoBehaviour
 {
@@ -51,8 +52,22 @@ public class SnekBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckNewSnakeInput();
+        
         if (Input.GetKeyDown("s")) {
             CreateSnake(); 
+        }
+    }
+
+    // Listen for the primary button, on hit add a new snek.
+    void CheckNewSnakeInput()
+    {
+        var inputDevices = new List<UnityEngine.XR.InputDevice>();
+        UnityEngine.XR.InputDevices.GetDevices(inputDevices);
+        
+        foreach (var device in inputDevices)
+        {
+            Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.role.ToString()));
         }
     }
 
