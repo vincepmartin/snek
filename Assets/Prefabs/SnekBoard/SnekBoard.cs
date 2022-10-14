@@ -12,8 +12,9 @@ public class SnekBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tag = "snekboard";
-        boardGrid = new Grid(xSize, ySize);
+        name = "SnekBoard";
+        // The + 2 allows for the walls to be rendered.
+        boardGrid = new Grid(xSize + 2, ySize + 2);
 
         PopulateBoardGrid();
     }
@@ -27,15 +28,27 @@ public class SnekBoard : MonoBehaviour
     void PopulateBoardGrid()
     {
         // Y
-        for (int i = 0; i < ySize; i ++)
+        for (int i = 0; i < ySize + 2; i ++)
         {
             // X 
-            for (int j = 0; j < xSize; j++)
+            for (int j = 0; j < xSize + 2; j++)
             {
-                boardGrid.Add(i, j, Instantiate(floorPrefab, transform, false));
-                boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
-                boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i,j).transform.localScale.y, cellWidth);
-                boardGrid.Get(i, j).name = "Floor: " + j + ", " + i;
+                if (i == 0 || i == ySize + 1 || j == 0 || j == xSize + 1)
+                {
+                    boardGrid.Add(i, j, Instantiate(wallPrefab, transform, false));
+                    boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
+                    boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i, j).transform.localScale.y, cellWidth);
+                    boardGrid.Get(i, j).transform.localPosition = new Vector3(boardGrid.Get(i,j).transform.localPosition.x, boardGrid.Get(i,j).transform.localPosition.y + boardGrid.Get(i,j).transform.localScale.y / 2, boardGrid.Get(i, j).transform.localPosition.z);
+                    boardGrid.Get(i, j).name = "Wall: " + j + ", " + i;
+                }
+                else
+                {
+                    boardGrid.Add(i, j, Instantiate(floorPrefab, transform, false));
+                    boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
+                    boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i, j).transform.localScale.y, cellWidth);
+                    boardGrid.Get(i, j).transform.localPosition = new Vector3(boardGrid.Get(i,j).transform.localPosition.x, boardGrid.Get(i,j).transform.localPosition.y + boardGrid.Get(i,j).transform.localScale.y / 2, boardGrid.Get(i, j).transform.localPosition.z);
+                    boardGrid.Get(i, j).name = "Floor: " + j + ", " + i;
+                }
             }
         }
     }

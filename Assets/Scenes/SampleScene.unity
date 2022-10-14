@@ -811,6 +811,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
         type: 3}
+      propertyPath: wallPrefab
+      value: 
+      objectReference: {fileID: 8153035912540369086, guid: 11ae33ac257c1554fa8280acfd1a6034,
+        type: 3}
+    - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
+        type: 3}
       propertyPath: floorPrefab
       value: 
       objectReference: {fileID: 1543220170435186277, guid: 599b2ac39bf72554cbaae4f9dc43fbf4,
