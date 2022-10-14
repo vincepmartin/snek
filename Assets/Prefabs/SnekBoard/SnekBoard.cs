@@ -34,6 +34,7 @@ public class SnekBoard : MonoBehaviour
             {
                 boardGrid.Add(i, j, Instantiate(floorPrefab, transform, false));
                 boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
+                boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i,j).transform.localScale.y, cellWidth);
                 boardGrid.Get(i, j).name = "Floor: " + j + ", " + i;
             }
         }

@@ -787,7 +787,7 @@ PrefabInstance:
     - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
         type: 3}
       propertyPath: cellWidth
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
         type: 3}
