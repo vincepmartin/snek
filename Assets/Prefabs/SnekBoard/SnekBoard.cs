@@ -7,14 +7,16 @@ public class SnekBoard : MonoBehaviour
     public int xSize;
     public int ySize;
     public float cellWidth;
-    private Grid boardGrid;
+
+    private Grid<GameObject> boardGrid;
+    // private Grid actionGrid; 
     
     // Start is called before the first frame update
     void Start()
     {
         name = "SnekBoard";
         // The + 2 allows for the walls to be rendered.
-        boardGrid = new Grid(xSize + 2, ySize + 2);
+        boardGrid = new Grid<GameObject>(xSize + 2, ySize + 2);
 
         PopulateBoardGrid();
     }
@@ -42,7 +44,13 @@ public class SnekBoard : MonoBehaviour
             }
         }
     }
-   
+
+    // Create the action grid, which is essentially just coordinate locations...
+    void CreateActionGrid()
+    {
+    
+    }   
+
     Vector3 GetPosition(int x, int y)
     {
         return new Vector3(x * cellWidth, 0, y * cellWidth); 

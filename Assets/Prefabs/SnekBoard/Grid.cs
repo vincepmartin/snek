@@ -5,16 +5,16 @@ using Unity.VisualScripting;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Grid {
+public class Grid<T> {
     private int x;
     private int y;
-    private GameObject[,] gridArray;
+    private T[,] gridArray;
 
     // Scale of the grid.  Going to try to use this to create the board with the same size.
     private Vector3 gridScale;
 
     // Constructor with gridArray items.
-    public Grid(GameObject[,] items)
+    public Grid(T[,] items)
     {
         // Set our x and y.
         y = items.Length;
@@ -27,23 +27,23 @@ public class Grid {
     {
         this.x = x;
         this.y = y;
-        gridArray = new GameObject[x, y];
+        gridArray = new T[x, y];
     }
     
-    public void Add(int x, int y, GameObject item)
+    public void Add(int x, int y, T item)
     {
         gridArray[x, y] = item; 
     }
 
-    public GameObject Get(int x, int y) {
+    public T Get(int x, int y) {
         return gridArray[x, y]; 
     }
     
-    public GameObject[] GetAllItems()
+    public T[] GetAllItems()
     {
         // Step 1: get total size of 2D array, and allocate 1D array.
         int size = gridArray.Length;
-        GameObject[] result = new GameObject[size];
+        T[] result = new T[size];
 
         // Step 2: copy 2D array elements into a 1D array.
         int write = 0;
