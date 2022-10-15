@@ -1,4 +1,3 @@
-using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class SnekBoard : MonoBehaviour
@@ -13,7 +12,7 @@ public class SnekBoard : MonoBehaviour
     private Grid<GameObject> boardGrid;
     private Grid<Vector3> actionGrid;
 
-    private const bool DEBUG = true;
+    private const bool DEBUG = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +24,7 @@ public class SnekBoard : MonoBehaviour
 
         PopulateBoardGrid();
         CreateActionGrid();
+        CreateSnake(3, 3);
     }
 
     // Update is called once per frame
@@ -85,11 +85,15 @@ public class SnekBoard : MonoBehaviour
         return actionGrid.Get(x, y);
     }
 
-    void CreateSnake()
+    // TODO: Fix body so that body parts are sibling components to the head.
+    void CreateSnake(int snakeX, int snakeY)
     {
-    
+        Debug.Log("Create Snake at " + snakeX + ", " + snakeY);
+        GameObject snake = Instantiate(snakePrefab, transform, false);
+        snake.transform.localPosition = actionGrid.Get(3, 3);
     }
 
+    // TODO: Implement creation of apple.
     void CreateApple()
     {
    

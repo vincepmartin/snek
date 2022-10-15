@@ -823,6 +823,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
         type: 3}
+      propertyPath: snakePrefab
+      value: 
+      objectReference: {fileID: 4410000565817611898, guid: 16b9cd1ef4131914a9fb65c7bb958aa0,
+        type: 3}
+    - target: {fileID: 3091256431193144239, guid: 1512556d110b72448a48213b3face706,
+        type: 3}
       propertyPath: wallThickness
       value: 0.003175
       objectReference: {fileID: 0}
