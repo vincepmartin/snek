@@ -1,24 +1,30 @@
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class SnekBoard : MonoBehaviour
 {
     public GameObject floorPrefab;
     public GameObject wallPrefab;
+    public GameObject snakePrefab;
     public int xSize;
     public int ySize;
     public float cellWidth;
 
     private Grid<GameObject> boardGrid;
-    // private Grid actionGrid; 
-    
+    private Grid<Vector3> actionGrid;
+
+    private const bool DEBUG = true;
+
     // Start is called before the first frame update
     void Start()
     {
         name = "SnekBoard";
         // The + 2 allows for the walls to be rendered.
         boardGrid = new Grid<GameObject>(xSize + 2, ySize + 2);
+        actionGrid = new Grid<Vector3>(xSize, ySize);
 
         PopulateBoardGrid();
+        CreateActionGrid();
     }
 
     // Update is called once per frame
@@ -45,16 +51,39 @@ public class SnekBoard : MonoBehaviour
         }
     }
 
-    // Create the action grid, which is essentially just coordinate locations...
+    // Create the action grid, which is essentially just coordinate locations that sit on top of the "FLOOR" of our board...
     void CreateActionGrid()
     {
-    
+        // Y
+        for (int i = 0; i < ySize; i++)
+        {
+            // X
+            for (int j = 0; j < xSize; j++)
+            {
+                GameObject t = boardGrid.Get(i + 1, j + 1);
+                Debug.Log("Getting: " + t.name + " at " + t.transform.position);
+                actionGrid.Add(i, j, new Vector3(t.transform.localPosition.x, t.transform.localPosition.y + cellWidth, t.transform.localPosition.z));
+
+                // Put some items at our grid to make sure it is placed properly. 
+                if (DEBUG)
+                {
+                    GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    temp.transform.localScale = new Vector3(.1f, .1f, .1f);
+                    temp.transform.localPosition = actionGrid.Get(i, j);
+                } 
+            }
+        }
     }   
 
-    Vector3 GetPosition(int x, int y)
+    private Vector3 GetPosition(int x, int y)
     {
         return new Vector3(x * cellWidth, 0, y * cellWidth); 
     }    
+
+    private Vector3 GetActionPosition(int x, int y)
+    {
+        return actionGrid.Get(x, y);
+    }
 
     void CreateSnake()
     {
