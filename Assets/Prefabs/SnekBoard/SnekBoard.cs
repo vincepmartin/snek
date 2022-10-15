@@ -38,7 +38,7 @@ public class SnekBoard : MonoBehaviour
                 boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
                 boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i, j).transform.localScale.y, cellWidth);
                 boardGrid.Get(i, j).transform.localPosition = new Vector3(boardGrid.Get(i,j).transform.localPosition.x, boardGrid.Get(i,j).transform.localPosition.y + boardGrid.Get(i,j).transform.localScale.y / 2, boardGrid.Get(i, j).transform.localPosition.z);
-                boardGrid.Get(i, j).name = isWall ? "Wall: " : "Floor: " + j + ", " + i;
+                boardGrid.Get(i, j).name = (isWall ? "Wall: " : "Floor: ") + j + ", " + i;
             }
         }
     }
