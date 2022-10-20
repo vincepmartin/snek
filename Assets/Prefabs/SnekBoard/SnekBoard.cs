@@ -69,9 +69,12 @@ public class SnekBoard : MonoBehaviour
                 // Put some items at our grid to make sure it is placed properly. 
                 if (DEBUG)
                 {
-                    GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    // GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    temp.transform.SetParent(transform);
                     temp.transform.localScale = new Vector3(.1f, .1f, .1f);
                     temp.transform.localPosition = actionGrid.Get(i, j);
+                    temp.name = "Sphere: " + j.ToString() + ", " + i.ToString();
                 } 
             }
         }
