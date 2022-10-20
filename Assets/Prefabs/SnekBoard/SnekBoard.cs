@@ -1,142 +1,107 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class SnekBoard : MonoBehaviour
 {
-    public Vector3 position = Vector3.zero;
-    private Vector3 scale;
-    public int gridWidth;
-    public int gridHeight;
-    public float cellSize = 5f;
+    public GameObject floorPrefab;
+    public GameObject wallPrefab;
+    public GameObject snakePrefab;
+    public int xSize;
+    public int ySize;
+    public float cellWidth;
 
-    public float wallHeight = 1f;
-    public float wallThickness = .5f;
-    public float floorThickness = .25f;
-    private Grid grid;
-    private GameObject floor;
-    private GameObject wall0;
-    private GameObject wall1;
-    private GameObject wall2;
-    private GameObject wall3;
+    private Grid<GameObject> boardGrid;
+    private Grid<Vector3> actionGrid;
 
-    public Snek snake;
-
-    // Allow me to set items via code.
-    public void InitWithProps(Vector3? position = null, int gridWidth = 2, int gridHeight = 2)
-    {
-        // TODO: Set scale and position baesd on values from grid... 
-        // this.scale = (Vector3)((scale == null) ? this.scale: scale);
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
-        this.position = (Vector3)((position == null) ? this.position: position);
-    }
+    private const bool DEBUG = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        tag = "snekboard";
-        transform.position = position;
-            
-        // Create Grid and then use it to set scale of our board.
-        CreateGrid();
+        name = "SnekBoard";
+        // The + 2 allows for the walls to be rendered.
+        boardGrid = new Grid<GameObject>(xSize + 2, ySize + 2);
+        actionGrid = new Grid<Vector3>(xSize, ySize);
 
-        // Get position based on the grid.
-        position.x += grid.GetScale().x / 2;
-        position.z += grid.GetScale().z / 2;
-        CreateFloor();
-        CreateWalls();
+        PopulateBoardGrid();
+        CreateActionGrid();
+        CreateSnake(3, 3);
+        EncalsulateBoardWithCollider();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckNewSnakeInput();
         
-        if (Input.GetKeyDown("s")) {
-            CreateSnake(); 
-        }
     }
 
-    // Listen for the primary button, on hit add a new snek.
-    void CheckNewSnakeInput()
+    void PopulateBoardGrid()
     {
-        var inputDevices = new List<UnityEngine.XR.InputDevice>();
-        UnityEngine.XR.InputDevices.GetDevices(inputDevices);
-        
-        foreach (var device in inputDevices)
+        // Y
+        for (int i = 0; i < ySize + 2; i ++)
         {
-            Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.role.ToString()));
+            // X 
+            for (int j = 0; j < xSize + 2; j++)
+            {
+                bool isWall = (i == 0 || i == ySize + 1 || j == 0 || j == xSize + 1);
+                boardGrid.Add(i, j, Instantiate(isWall ? wallPrefab: floorPrefab, transform, false));
+                boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
+                boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i, j).transform.localScale.y, cellWidth);
+                boardGrid.Get(i, j).transform.localPosition = new Vector3(boardGrid.Get(i,j).transform.localPosition.x, boardGrid.Get(i,j).transform.localPosition.y + boardGrid.Get(i,j).transform.localScale.y / 2, boardGrid.Get(i, j).transform.localPosition.z);
+                boardGrid.Get(i, j).name = (isWall ? "Wall: " : "Floor: ") + j + ", " + i;
+            }
         }
     }
 
-    void CreateGrid()
+    // Create the action grid, which is essentially just coordinate locations that sit on top of the "FLOOR" of our board...
+    void CreateActionGrid()
     {
-        grid = new Grid(gridWidth, gridHeight, cellSize, null);
-        scale = grid.GetScale();
-    }
-    void CreateFloor()
+        // Y
+        for (int i = 0; i < ySize; i++)
+        {
+            // X
+            for (int j = 0; j < xSize; j++)
+            {
+                GameObject t = boardGrid.Get(i + 1, j + 1);
+                Debug.Log("Getting: " + t.name + " at " + t.transform.position);
+                actionGrid.Add(i, j, new Vector3(t.transform.localPosition.x, t.transform.localPosition.y + cellWidth, t.transform.localPosition.z));
+
+                // Put some items at our grid to make sure it is placed properly. 
+                if (DEBUG)
+                {
+                    GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    temp.transform.localScale = new Vector3(.1f, .1f, .1f);
+                    temp.transform.localPosition = actionGrid.Get(i, j);
+                } 
+            }
+        }
+    }   
+
+    private Vector3 GetPosition(int x, int y)
     {
-        Debug.Log("Creating a floor");
-        floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        floor.name = "floor";
-        floor.transform.localScale = new Vector3(scale.x, floorThickness, scale.z);
-        floor.transform.position = position;
-        floor.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.blue);
-        floor.GetComponent<BoxCollider>().isTrigger = true;
-        floor.transform.SetParent(transform, false);
-    }
+        return new Vector3(x * cellWidth, 0, y * cellWidth); 
+    }    
 
-    void CreateWalls()
+    private Vector3 GetActionPosition(int x, int y)
     {
-        // Create walls, starting at top (0) and going clockwise.
-        Debug.Log("Creating walls");
-        wall0 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall0.name = "wall0";
-        wall0.transform.SetParent(transform);
-        wall0.transform.position = new Vector3(position.x, (wallHeight - floorThickness) / 2 , scale.z);
-        wall0.transform.localScale = new Vector3(scale.x, wallHeight, wallThickness);
-        wall0.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
-        wall0.GetComponent<BoxCollider>().isTrigger = true;
-
-        wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall1.name = "wall1";
-        wall1.transform.SetParent(transform);
-        wall1.transform.position = new Vector3(floor.transform.localScale.x + (wallThickness / 2), (wallHeight - floorThickness) / 2, floor.transform.localScale.z/2);
-        wall1.transform.localScale = new Vector3(wallThickness, wallHeight, grid.GetScale().z + wallThickness);
-        wall1.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
-        wall1.GetComponent<BoxCollider>().isTrigger = true;
-        
-        wall2 = Instantiate(wall0);
-        wall2.name = "wall2";
-        wall2.transform.SetParent(transform);
-        wall2.transform.position = new Vector3(wall2.transform.position.x, wall2.transform.position.y, wall2.transform.position.z - scale.z);
-
-        wall3 = Instantiate(wall1);
-        wall3.name = "wall3";
-        wall3.transform.SetParent(transform);
-        wall3.transform.position = new Vector3(floor.transform.position.x - (floor.transform.localScale.x / 2) - (wallThickness / 2), wall3.transform.position.y, wall3.transform.position.z);
+        return actionGrid.Get(x, y);
     }
 
-    void CreateSnake()
+    // TODO: Fix body so that body parts are sibling components to the head.
+    void CreateSnake(int snakeX, int snakeY)
     {
-        Debug.Log("Creating a new snake!!!! via the board");
-        // TODO: Add the snake to a grid postion. Try 5,5.
-        var snakePosition = grid.GetWorldPosition(5, 5);
+        Debug.Log("Create Snake at " + snakeX + ", " + snakeY);
+        GameObject snake = Instantiate(snakePrefab, transform, false);
+        snake.transform.localPosition = actionGrid.Get(3, 3);
+    }
+    // TODO: Check all child objects and add them to Bounds that can be used to create a 3d collider box.
+    private void EncalsulateBoardWithCollider()
+    {
 
-        // GameObject snakeTemp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        // snakeTemp.name = "SnakeTemp";
-        // snakeTemp.transform.position = snakePosition;
-        // snakeTemp.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
-        // Instantiate(snakeTemp);
-
-        snake.transform.position = snakePosition;
-        snake = Instantiate(snake);
     }
 
+    // TODO: Implement creation of apple.
     void CreateApple()
     {
-        // Find random location within grid to place an apple.
+   
     }
 }

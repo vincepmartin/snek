@@ -1,52 +1,60 @@
 using UnityEngine;
 using CodeMonkey.Utils;
+using UnityEditor.UIElements;
+using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 
-public class Grid
-{
-    private int width;
-    private int height;
-    private float cellSize;
-    private int[,] gridArray;
-    private bool VerboseDebug = false; 
+public class Grid<T> {
+    private int x;
+    private int y;
+    private T[,] gridArray;
 
     // Scale of the grid.  Going to try to use this to create the board with the same size.
     private Vector3 gridScale;
 
-    public Grid(int width, int height, float cellSize, Transform transformParent)
+    // Constructor with gridArray items.
+    public Grid(T[,] items)
     {
-        this.width = width;
-        this.height = height;
-        this.cellSize = cellSize;
+        // Set our x and y.
+        y = items.Length;
+        x = items.GetLength(1);
+        gridArray = items;
+    }
 
-        gridArray = new int[width, height];
-        gridScale = new Vector3(width * cellSize, 0, height * cellSize);
+    // Constructor with dimensions with no gridArray data.
+    public Grid(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+        gridArray = new T[x, y];
+    }
+    
+    public void Add(int x, int y, T item)
+    {
+        gridArray[x, y] = item; 
+    }
 
-        // Cycle through every item in our grid.
-        int count = 0;
-        for (int z = 0; z < gridArray.GetLength(1); z++)
+    public T Get(int x, int y) {
+        return gridArray[x, y]; 
+    }
+    
+    public T[] GetAllItems()
+    {
+        // Step 1: get total size of 2D array, and allocate 1D array.
+        int size = gridArray.Length;
+        T[] result = new T[size];
+
+        // Step 2: copy 2D array elements into a 1D array.
+        int write = 0;
+        for (int i = 0; i <= gridArray.GetUpperBound(0); i++)
         {
-            for (int x = 0; x < gridArray.GetLength(0); x++)
+            for (int z = 0; z <= gridArray.GetUpperBound(1); z++)
             {
-                gridArray[x, z] = count;
-                count += 1;
-                if (VerboseDebug)
-                {
-                    UtilsClass.CreateWorldText(gridArray[x, z].ToString(), null, GetWorldPosition(x, z), 20, Color.white, TextAnchor.MiddleCenter);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
-                } 
+                result[write++] = gridArray[i, z];
             }
         }
-    }
-
-    public Vector3 GetWorldPosition(int x, int y)
-    {
-        return new Vector3(((x * cellSize) + cellSize / 2), 0, (y * cellSize) + cellSize / 2); 
-    }
-
-    // Get grid position so that you can draw things over grid.
-    public Vector3 GetScale()
-    {
-        return gridScale;
+        // Step 3: return the new array.
+        return result;   
     }
 }
