@@ -25,6 +25,7 @@ public class SnekBoard : MonoBehaviour
         PopulateBoardGrid();
         CreateActionGrid();
         CreateSnake(3, 3);
+        EncalsulateBoardWithCollider();
     }
 
     // Update is called once per frame
@@ -91,6 +92,11 @@ public class SnekBoard : MonoBehaviour
         Debug.Log("Create Snake at " + snakeX + ", " + snakeY);
         GameObject snake = Instantiate(snakePrefab, transform, false);
         snake.transform.localPosition = actionGrid.Get(3, 3);
+    }
+    // TODO: Check all child objects and add them to Bounds that can be used to create a 3d collider box.
+    private void EncalsulateBoardWithCollider()
+    {
+
     }
 
     // TODO: Implement creation of apple.

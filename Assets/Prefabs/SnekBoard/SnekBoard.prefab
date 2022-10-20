@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8761385218811740701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 0.5, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826dbbd3b6359d944b4e3f6f641c2568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  gridWidth: 10
-  gridHeight: 5
-  cellSize: 5
-  wallHeight: 1
-  wallThickness: 0.5
-  floorThickness: 0.25
-  snake: {fileID: 8856859357502210916, guid: 16b9cd1ef4131914a9fb65c7bb958aa0, type: 3}
+  floorPrefab: {fileID: 1543220170435186277, guid: 599b2ac39bf72554cbaae4f9dc43fbf4,
+    type: 3}
+  wallPrefab: {fileID: 8153035912540369086, guid: 11ae33ac257c1554fa8280acfd1a6034,
+    type: 3}
+  snakePrefab: {fileID: 4410000565817611898, guid: 16b9cd1ef4131914a9fb65c7bb958aa0,
+    type: 3}
+  xSize: 10
+  ySize: 10
+  cellWidth: 0.1
