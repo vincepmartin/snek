@@ -106,7 +106,6 @@ public class Snek : MonoBehaviour
             Vector3 point = locationHistory[Mathf.Min(index * gap, locationHistory.Count - 1)];
             Vector3 moveDirection = point - body.transform.position;
             body.transform.position = point;
-            // body.transform.LookAt(moveDirection);
             index++;
         }
     }
@@ -120,11 +119,17 @@ public class Snek : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Snek Trigger Entered: " + other.gameObject.name);
-
+        
         if (other.gameObject.tag.Equals("apple"))
         {
             AddBody(bodyGrowthRate);
             Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.name == "boardWall")
+        {
+            Debug.Log("We hit the wall!");
+            pause = true;
         }
     }
 }
