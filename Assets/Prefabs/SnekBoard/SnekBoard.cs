@@ -8,11 +8,12 @@ public class SnekBoard : MonoBehaviour
     public int xSize;
     public int ySize;
     public float cellWidth;
+    public bool DEBUG = false;
 
     private Grid<GameObject> boardGrid;
     private Grid<Vector3> actionGrid;
 
-    private const bool DEBUG = false;
+    // private const bool DEBUG = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +48,7 @@ public class SnekBoard : MonoBehaviour
                 boardGrid.Get(i, j).transform.localPosition = GetPosition(j, i);
                 boardGrid.Get(i, j).transform.localScale = new Vector3(cellWidth, boardGrid.Get(i, j).transform.localScale.y, cellWidth);
                 boardGrid.Get(i, j).transform.localPosition = new Vector3(boardGrid.Get(i,j).transform.localPosition.x, boardGrid.Get(i,j).transform.localPosition.y + boardGrid.Get(i,j).transform.localScale.y / 2, boardGrid.Get(i, j).transform.localPosition.z);
-                boardGrid.Get(i, j).name = (isWall ? "Wall: " : "Floor: ") + j + ", " + i;
+                boardGrid.Get(i, j).name = isWall ? "boardWall" : "boardFloor";
             }
         }
     }
@@ -68,9 +69,12 @@ public class SnekBoard : MonoBehaviour
                 // Put some items at our grid to make sure it is placed properly. 
                 if (DEBUG)
                 {
-                    GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    // GameObject temp = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform, false);
+                    GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    temp.transform.SetParent(transform);
                     temp.transform.localScale = new Vector3(.1f, .1f, .1f);
                     temp.transform.localPosition = actionGrid.Get(i, j);
+                    temp.name = "Sphere: " + j.ToString() + ", " + i.ToString();
                 } 
             }
         }
@@ -96,7 +100,23 @@ public class SnekBoard : MonoBehaviour
     // TODO: Check all child objects and add them to Bounds that can be used to create a 3d collider box.
     private void EncalsulateBoardWithCollider()
     {
+        BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+        boxCollider.size = Vector3.zero;
 
+        Bounds bounds = new Bounds(transform.position, Vector3.zero);
+
+        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+        {
+            Renderer childRenderer = child.GetComponent<Renderer>();
+            
+            if (childRenderer != null && (child.name == "boardWall" || child.name == "boardFloor"))
+            {
+                bounds.Encapsulate(childRenderer.bounds);
+            }
+
+            boxCollider.size = bounds.size;
+            boxCollider.center = new Vector3(bounds.size.x / 2, bounds.size.y / 2, bounds.size.z / 2);
+        }
     }
 
     // TODO: Implement creation of apple.

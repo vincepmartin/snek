@@ -39,6 +39,7 @@ public class Snek : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        name = "snek";
         locationHistory = new List<Vector3>();
 
         // Create any body objects that are required.
@@ -53,7 +54,9 @@ public class Snek : MonoBehaviour
 
     private void AddBody(int i)
     {
-        bodies.Add(Instantiate(bodyPrefab));
+        var bodyPart = Instantiate(bodyPrefab);
+        bodyPart.name = "snekBody";
+        bodies.Add(Instantiate(bodyPart));
     }
 
     // Update is called once per frame
