@@ -40,6 +40,8 @@ public class Snek : MonoBehaviour
     void Start()
     {
         name = "snek";
+        gameObject.tag = "snake";
+        
         locationHistory = new List<Vector3>();
 
         // Create any body objects that are required.
@@ -49,14 +51,13 @@ public class Snek : MonoBehaviour
             AddBody(i);
         }
 
-        gameObject.tag = "snake";
     }
 
     private void AddBody(int i)
     {
         var bodyPart = Instantiate(bodyPrefab);
         bodyPart.name = "snekBody";
-        bodies.Add(Instantiate(bodyPart));
+        bodies.Add(bodyPart);
     }
 
     // Update is called once per frame
